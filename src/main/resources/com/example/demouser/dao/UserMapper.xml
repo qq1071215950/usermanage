@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demouser.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.example.demouser.entity.User">
+    <!--@mbg.generated-->
+    <!--@Table user-->
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="age" jdbcType="VARCHAR" property="age" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="tags" jdbcType="VARCHAR" property="tags" />
+  </resultMap>
+  <insert id="insert" parameterType="com.example.demouser.entity.User" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into user (id, `name`, age, 
+      address, phone, email, 
+      tags)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{tags,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demouser.entity.User">
+    <!--@mbg.generated-->
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="tags != null">
+        tags,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null">
+        #{tags,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateUser">
+    update user
+    <set>
+      <if test="address != null">
+        address = #{address},
+      </if>
+      <if test="age != null">
+        age = #{age},
+      </if>
+      <if test="email != null">
+        email = #{email},
+      </if>
+      <if test="name != null">
+        name = #{name},
+      </if>
+      <if test="tags != null">
+        tags = #{tags},
+      </if>
+      <if test="phone != null">
+        phone = #{phone},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <delete id="deleteUserById">
+    delete from user
+    where id = #{id}
+  </delete>
+  <select id="selectUserCount" resultType="java.lang.Integer">
+    select *
+    from user
+    where id = #{id};
+  </select>
+  <select id="selectUserById" resultType="com.example.demouser.entity.User">
+    select * from user
+    where id = #{id}
+  </select>
+  <select id="selectUserByConditions" resultType="com.example.demouser.entity.User">
+    select * from user
+    <where>
+      <if test="phone != null">
+        and phone = #{phone}
+      </if>
+      <if test="name != null">
+       and  name = #{name}
+      </if>
+      <if test="email != null">
+       and email = #{email}
+      </if>
+    </where>
+    order by id desc
+    limit ${(currPage-1)*pageSize},${pageSize}
+  </select>
+  <select id="countUserByConditions" resultType="java.lang.Integer">
+    select count(1)
+    from user
+    <where>
+      <if test="phone != null">
+        and phone = #{phone}
+      </if>
+      <if test="name != null">
+        and name = #{name}
+      </if>
+      <if test="email != null">
+        and email = #{email}
+      </if>
+    </where>
+  </select>
+</mapper>
